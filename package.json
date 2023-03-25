@@ -1,0 +1,24 @@
+{
+  "name": "snakeclone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve" : "live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ursteiner/SnakeClone.git"
+  },
+  "keywords": [],
+  "author": "Christoph Müller",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ursteiner/SnakeClone/issues"
+  },
+  "homepage": "https://github.com/ursteiner/SnakeClone#readme",
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
+}
