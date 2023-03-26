@@ -1,0 +1,19 @@
+#content {
+    width: 500px;
+    height: 300px;
+    padding: 0;
+    margin: auto;
+    display: block;
+    background-color: #76b5c5;
+}
+
+#gameCanvas {
+    border: 1px solid black;
+}
+
+.center {
+    width: 500px;
+    padding: 0;
+    margin: auto;
+    display: block;
+}

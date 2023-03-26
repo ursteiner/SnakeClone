@@ -3,7 +3,7 @@ let context;
 const width = 20;
 const height = 20;
 let snake = { posX: width, posY: height, speedX: 0, speedY: 0, width: width, height: height, color: "#154c79", alive: true, tail: [] };
-let food = { posX: 100, posY: 100, width: width, height: height, color: "green" };
+let food = { posX: 100, posY: 100, width: width, height: height, color: "#873e23" };
 
 window.onload = initGame;
 
@@ -18,7 +18,7 @@ function initGame() {
 
 function gameLoop() {
 
-    showText("score", "Score: " + snake.tail.length);
+    showText("score", "SCORE: " + snake.tail.length);
 
     checkGameEnd();
     checkFoodMatched();
@@ -40,18 +40,36 @@ function draw() {
 
     //food
     context.fillStyle = food.color;
-    context.fillRect(food.posX, food.posY, food.width, food.height);
-
-    //head
-    context.fillStyle = snake.color;
-    context.fillRect(snake.posX, snake.posY, snake.width, snake.height);
+    context.fillRect(food.posX, food.posY, food.width-1, food.height-1);
 
     //tail
+    context.fillStyle = snake.color;
     for (let i = 0; i < snake.tail.length; i++) {
         const t = snake.tail[i];
-        context.fillRect(t.posX, t.posY, width, height);
+        context.fillRect(t.posX, t.posY, width-1, height-1);
     }
 
+    //head
+    context.fillRect(snake.posX, snake.posY, snake.width-1, snake.height-1);
+    
+    //eyes
+    context.fillStyle = "white";
+    if(snake.speedX > 0){
+        context.fillRect(snake.posX + 10, snake.posY + 3, 4, 4);
+        context.fillRect(snake.posX + 10, snake.posY + 13, 4, 4);
+    }else if (snake.speedX < 0){
+        context.fillRect(snake.posX + 3, snake.posY + 3, 4, 4);
+        context.fillRect(snake.posX + 3, snake.posY + 13, 4, 4);
+ 
+    }else if (snake.speedY > 0){
+        context.fillRect(snake.posX + 3, snake.posY + 10, 4, 4);
+        context.fillRect(snake.posX + 13, snake.posY + 10, 4, 4);
+ 
+    }else if (snake.speedY < 0){
+        context.fillRect(snake.posX + 3, snake.posY + 3, 4, 4);
+        context.fillRect(snake.posX + 13, snake.posY + 3, 4, 4);
+ 
+    }
 }
 
 function update() {
