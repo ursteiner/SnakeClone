@@ -1,6 +1,6 @@
 # SnakeClone
 
-![seven-segment dice in action](https://github.com/ursteiner/SnakeClone/blob/master/screenshot.png)
+![Snake Clone Screenshot](https://github.com/ursteiner/SnakeClone/blob/main/screenshot.png)
 
 Start live-server by running
 
