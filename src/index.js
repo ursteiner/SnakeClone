@@ -2,13 +2,13 @@ let canvas;
 let context;
 const width = 20;
 const height = 20;
-let snake = { posX: width, posY: height, speedX: 0, speedY: 0, width: width, height: height, color: "#154c79", alive: true, tail: [] };
-let food = { posX: 100, posY: 100, width: width, height: height, color: "#873e23" };
+let snake = { posX: width, posY: height, speedX: 0, speedY: 0, width: width, height: height, color: "#820e20", alive: true, tail: [] };
+let food = { posX: 100, posY: 100, width: width, height: height, color: "#ed6002" };
 
 window.onload = initGame;
 
 function initGame() {
-    document.onkeydown = handleUserInput;
+    document.addEventListener("keydown",  (event) => {handleUserInput(event)});
 
     canvas = document.getElementById('gameCanvas');
     context = canvas.getContext('2d');
@@ -44,9 +44,8 @@ function draw() {
 
     //tail
     context.fillStyle = snake.color;
-    for (let i = 0; i < snake.tail.length; i++) {
-        const t = snake.tail[i];
-        context.fillRect(t.posX, t.posY, width-1, height-1);
+    for (const tailPart of snake.tail) {
+        context.fillRect(tailPart.posX, tailPart.posY, width-1, height-1);
     }
 
     //head
@@ -98,56 +97,57 @@ function checkGameEnd() {
     }
 
     //tail hit
-    for (let i = 0; i < snake.tail.length; i++) {
-        const t = snake.tail[i];
-        if (t.posX == snake.posX && t.posY == snake.posY) {
+    for (const tailPart of snake.tail) {
+        console.log(tailPart.posX + " " + snake.posX + " " + tailPart.posY + " " + snake.posY);
+        if (tailPart.posX === snake.posX + snake.speedX && tailPart.posY === snake.posY + snake.speedY) {
             snake.alive = false;
+            break;
         }
     }
 }
 
 function checkFoodMatched() {
-    if (snake.posX == food.posX && snake.posY == food.posY) {
+    if (snake.posX === food.posX && snake.posY === food.posY) {
         //add snake tail element
-        snake.tail.push({ posX: food.posX, posY: food.posY, width: width, height: height });
+        snake.tail.push({ posX: snake.posX, posY: snake.posY, width: width, height: height });
         replaceFood();
     }
 }
 
 function replaceFood() {
-    let reset;
+    let foodPlaceNotFree;
     do {
-        reset = false;
+        foodPlaceNotFree = false;
         food.posX = Math.floor(Math.random() * (canvas.width / width)) * width;
         food.posY = Math.floor(Math.random() * (canvas.height / height)) * height;
 
-        for (let i = 0; i < snake.tail.length; i++) {
-            const t = snake.tail[i];
-            if (food.posX == t.posX && food.posY == t.posY) {
-                reset = true;
+        for (const tailPart of snake.tail) {
+            if (food.posX === tailPart.posX && food.posY === tailPart.posY) {
+                foodPlaceNotFree = true;
             }
         }
-    } while (reset);
+    } while (foodPlaceNotFree);
 }
 
-function handleUserInput(e) {
-    e = e || window.event;
+function handleUserInput(event) {
 
-    if (e.keyCode == '38') {
-        snake.speedY = -snake.height;
-        snake.speedX = 0;
-    }
-    else if (e.keyCode == '40') {
-        snake.speedY = snake.height;
-        snake.speedX = 0;
-    }
-    else if (e.keyCode == '37') {
-        snake.speedY = 0;
-        snake.speedX = -snake.width;
-    }
-    else if (e.keyCode == '39') {
-        snake.speedY = 0;
-        snake.speedX = snake.width;
+    switch(event.key){
+        case 'ArrowUp':
+            snake.speedY = -snake.height;
+            snake.speedX = 0;
+            break;
+        case 'ArrowDown':
+            snake.speedY = snake.height;
+            snake.speedX = 0;
+            break;
+        case 'ArrowLeft':
+            snake.speedY = 0;
+            snake.speedX = -snake.width;
+            break;
+        case 'ArrowRight':
+            snake.speedY = 0;
+            snake.speedX = snake.width;
+            break;
     }
 }
 
